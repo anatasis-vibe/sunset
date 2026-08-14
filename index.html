@@ -351,6 +351,18 @@
 </style>
 
 <div id="app" data-lang="ko">
+<script>
+  (function () {
+    var a = document.currentScript.parentNode;
+    var l;
+    try { l = localStorage.getItem('trip-lang'); } catch (e) {}
+    if (l !== 'ko' && l !== 'en') {
+      var n = (navigator.language || navigator.userLanguage || 'ko').toLowerCase();
+      l = n.indexOf('ko') === 0 ? 'ko' : (n.indexOf('en') === 0 ? 'en' : 'ko');
+    }
+    a.setAttribute('data-lang', l);
+  })();
+</script>
 
 <div class="hero">
   <div class="lang-switch" role="group" aria-label="language">
@@ -524,7 +536,9 @@
       try { localStorage.setItem('trip-lang', l); } catch (e) {}
     }
     btns.forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.set); }); });
-    try { var saved = localStorage.getItem('trip-lang'); if (saved) setLang(saved); } catch (e) {}
+    // reflect the initial language (set by the early inline detector) on the toggle
+    var cur = app.dataset.lang;
+    btns.forEach(function (b) { b.classList.toggle('active', b.dataset.set === cur); });
     // lightbox
     var lb = document.getElementById('lightbox');
     var lbImg = lb.querySelector('img');
