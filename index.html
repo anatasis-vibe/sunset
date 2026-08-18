@@ -279,7 +279,13 @@
   }
   .t-item.t-move::after { background: var(--sea); border-color: var(--sea); width: 6px; height: 6px; left: 65px; top: 6px; }
   .t-item > div { padding-left: 2px; }
-  .t-item.t-move .t-title { color: var(--ink-soft); font-style: normal; }
+  .t-item.t-move .t-title { color: var(--ink-soft); font-style: normal; margin-bottom: 0; }
+  .t-item.t-move .t-title + .t-dist { margin-top: 5px; }
+  .t-dist {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 700; color: var(--sea);
+    background: var(--surface-2); padding: 2px 10px; border-radius: 999px;
+  }
   .t-title { font-weight: 800; font-size: 15px; margin: 0 0 4px; }
   .t-opts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
   .t-opts li { font-size: 14px; color: var(--ink-soft); padding-left: 14px; position: relative; }
@@ -479,7 +485,7 @@
       <ul class="timeline">
         <li class="t-item t-move">
           <span class="t-time">09:00</span>
-          <div><p class="t-title"><span class="ko">평택 출발</span><span class="en">Depart Pyeongtaek</span></p></div>
+          <div><p class="t-title"><span class="ko">평택 출발</span><span class="en">Depart Pyeongtaek</span></p><span class="t-dist">🚗 <span class="ko">태안까지 약 2시간</span><span class="en">~2 hr to Taean</span></span></div>
         </li>
         <li class="t-item">
           <span class="t-time">11:00</span>
@@ -493,7 +499,7 @@
         </li>
         <li class="t-item t-move">
           <span class="t-time">12:00<span class="end">–12:25</span></span>
-          <div><p class="t-title"><span class="ko">안면도 방향 이동</span><span class="en">Head toward Anmyeondo</span></p></div>
+          <div><p class="t-title"><span class="ko">안면도 방향 이동</span><span class="en">Head toward Anmyeondo</span></p><span class="t-dist">🚗 <span class="ko">약 25분</span><span class="en">~25 min</span></span></div>
         </li>
         <li class="t-item">
           <span class="t-time">12:30<span class="end">–13:20</span></span>
@@ -517,7 +523,7 @@
         </li>
         <li class="t-item t-move">
           <span class="t-time">14:00<span class="end">–14:20</span></span>
-          <div><p class="t-title"><span class="ko">몽산포 · 청포대 방향 이동</span><span class="en">Head toward Mongsanpo · Cheongpodae</span></p></div>
+          <div><p class="t-title"><span class="ko">몽산포 · 청포대 방향 이동</span><span class="en">Head toward Mongsanpo · Cheongpodae</span></p><span class="t-dist">🚗 <span class="ko">약 20분</span><span class="en">~20 min</span></span></div>
         </li>
         <li class="t-item">
           <span class="t-time">14:20<span class="end">–15:00</span></span>
