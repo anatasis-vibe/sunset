@@ -260,6 +260,30 @@
   .calc[open] .chev { transform: rotate(180deg); }
   .calc-body { padding: 14px 18px; font-size: 14px; line-height: 1.75; color: var(--ink); }
   @media (prefers-reduced-motion: reduce) { .calc .chev { transition: none; } }
+
+  /* Friday timeline (reuses .calc shell for the collapsible) */
+  .schedule summary .s-title { display: flex; flex-direction: column; gap: 2px; }
+  .schedule summary .s-title small { font-weight: 600; color: var(--ink-soft); font-size: 12.5px; }
+  .timeline { list-style: none; margin: 0; padding: 18px 18px 6px; position: relative; }
+  .timeline::before {
+    content: ""; position: absolute; left: 67px; top: 8px; bottom: 8px; width: 2px;
+    background: var(--line);
+  }
+  .t-item { position: relative; display: grid; grid-template-columns: 60px 1fr; column-gap: 16px; padding: 0 0 22px; }
+  .t-item:last-child { padding-bottom: 4px; }
+  .t-time { font-size: 12.5px; font-weight: 800; color: var(--coral-deep); text-align: right; line-height: 1.5; padding-top: 1px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .t-time .end { display: block; color: var(--ink-soft); font-weight: 700; }
+  .t-item::after {
+    content: ""; position: absolute; left: 63px; top: 4px; width: 10px; height: 10px;
+    border-radius: 50%; background: var(--surface); border: 2.5px solid var(--sea);
+  }
+  .t-item.t-move::after { background: var(--sea); border-color: var(--sea); width: 6px; height: 6px; left: 65px; top: 6px; }
+  .t-item > div { padding-left: 2px; }
+  .t-item.t-move .t-title { color: var(--ink-soft); font-style: normal; }
+  .t-title { font-weight: 800; font-size: 15px; margin: 0 0 4px; }
+  .t-opts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+  .t-opts li { font-size: 14px; color: var(--ink-soft); padding-left: 14px; position: relative; }
+  .t-opts li::before { content: "·"; position: absolute; left: 2px; color: var(--gold); font-weight: 900; }
   @media (prefers-reduced-motion: reduce) { .chip { transition: none; } .chip:hover { transform: none; } }
 
   /* Notice / 공지 */
@@ -385,6 +409,10 @@
     <h2><span class="ko">📢 공지사항</span><span class="en">📢 Notice</span></h2>
     <ul class="n-list">
       <li>
+        <span class="ic">🕘</span>
+        <span class="txt"><b><span class="ko">출발 시간: 오전 9시</span><span class="en">Departure: 9:00 AM</span></b><span><span class="ko">차량 1·2는 오전 9시 평택 출발. 차량 3(벤자민·문은정·김지윤)은 오후 4시.</span><span class="en">Cars 1 & 2 leave Pyeongtaek at 9 AM. Car 3 (Benjamin, Kelly, Ji-yoon) leaves at 4 PM.</span></span></span>
+      </li>
+      <li>
         <span class="ic">📍</span>
         <span class="txt"><b><span class="ko">첫 집결 · 도착 장소</span><span class="en">Meeting & arrival point</span></b><span><span class="ko">확정되면 여기에 업데이트할게요.</span><span class="en">We'll update here once it's set.</span></span></span>
         <span class="flag"><span class="ko">미정</span><span class="en">TBD</span></span>
@@ -438,7 +466,89 @@
   </section>
 
   <section>
-    <div class="sec-head"><span class="no">03</span><h2><span class="ko">식사 일정</span><span class="en">Meals</span></h2></div>
+    <div class="sec-head"><span class="no">03</span><h2><span class="ko">금요일 일정</span><span class="en">Friday Schedule</span></h2></div>
+    <p class="sec-note"><span class="ko">확정된 초안이에요. 날씨나 상황에 따라 조금씩 바뀔 수 있어요.</span><span class="en">A confirmed draft — may shift slightly with weather or conditions.</span></p>
+    <details class="schedule calc" style="margin-top:16px">
+      <summary>
+        <span class="s-title">
+          <span><span class="ko">타임라인 보기</span><span class="en">See the timeline</span></span>
+          <small><span class="ko">09:00 평택 출발 → 15:00 체크인</span><span class="en">09:00 depart Pyeongtaek → 15:00 check-in</span></small>
+        </span>
+        <span class="chev">▾</span>
+      </summary>
+      <ul class="timeline">
+        <li class="t-item t-move">
+          <span class="t-time">09:00</span>
+          <div><p class="t-title"><span class="ko">평택 출발</span><span class="en">Depart Pyeongtaek</span></p></div>
+        </li>
+        <li class="t-item">
+          <span class="t-time">11:00</span>
+          <div>
+            <p class="t-title"><span class="ko">태안 도착 · 점심</span><span class="en">Arrive in Taean · Lunch</span></p>
+            <ul class="t-opts">
+              <li><span class="ko">점심 장소 미정</span><span class="en">Lunch spot TBD</span></li>
+              <li><span class="ko">태안 서부시장 근처도 가능</span><span class="en">Taean Seobu Market area also an option</span></li>
+            </ul>
+          </div>
+        </li>
+        <li class="t-item t-move">
+          <span class="t-time">12:00<span class="end">–12:25</span></span>
+          <div><p class="t-title"><span class="ko">안면도 방향 이동</span><span class="en">Head toward Anmyeondo</span></p></div>
+        </li>
+        <li class="t-item">
+          <span class="t-time">12:30<span class="end">–13:20</span></span>
+          <div>
+            <p class="t-title"><span class="ko">선택 일정</span><span class="en">Optional activity</span></p>
+            <ul class="t-opts">
+              <li><span class="ko">안면카트체험장</span><span class="en">Anmyeon Kart Track</span></li>
+              <li><span class="ko">카트를 타지 않는 팀은 바다뷰 카페에서 휴식</span><span class="en">Non-kart group relaxes at an ocean-view café</span></li>
+            </ul>
+          </div>
+        </li>
+        <li class="t-item">
+          <span class="t-time">13:20<span class="end">–14:00</span></span>
+          <div>
+            <p class="t-title"><span class="ko">백사장항 · 꽃게다리</span><span class="en">Baeksajang Port · Crab Bridge</span></p>
+            <ul class="t-opts">
+              <li><span class="ko">백사장항 수산시장 구경</span><span class="en">Browse the Baeksajang fish market</span></li>
+              <li><span class="ko">꽃게다리 산책</span><span class="en">Walk across Crab Bridge</span></li>
+            </ul>
+          </div>
+        </li>
+        <li class="t-item t-move">
+          <span class="t-time">14:00<span class="end">–14:20</span></span>
+          <div><p class="t-title"><span class="ko">몽산포 · 청포대 방향 이동</span><span class="en">Head toward Mongsanpo · Cheongpodae</span></p></div>
+        </li>
+        <li class="t-item">
+          <span class="t-time">14:20<span class="end">–15:00</span></span>
+          <div>
+            <p class="t-title"><span class="ko">바다 & 산책</span><span class="en">Sea & a walk</span></p>
+            <ul class="t-opts">
+              <li><span class="ko">몽산포 해변</span><span class="en">Mongsanpo Beach</span></li>
+              <li><span class="ko">몽산포 전망대</span><span class="en">Mongsanpo Lookout</span></li>
+              <li><span class="ko">태안해변길 4코스 · 솔모랫길 일부 산책</span><span class="en">Part of Taean Coast Trail 4 (Solmoraet-gil)</span></li>
+            </ul>
+          </div>
+        </li>
+        <li class="t-item">
+          <span class="t-time">15:00~</span>
+          <div>
+            <p class="t-title"><span class="ko">숙소 체크인 → 자유시간</span><span class="en">Check in at the stay → free time</span></p>
+            <ul class="t-opts">
+              <li><span class="ko">청포대 해변</span><span class="en">Cheongpodae Beach</span></li>
+              <li><span class="ko">바다 수영</span><span class="en">Swim in the sea</span></li>
+              <li><span class="ko">숙소 수영장</span><span class="en">Pool at the stay</span></li>
+              <li><span class="ko">조개·갯벌체험</span><span class="en">Clam digging on the tidal flat</span></li>
+              <li><span class="ko">숙소에서 휴식</span><span class="en">Rest at the stay</span></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </details>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="no">04</span><h2><span class="ko">식사 일정</span><span class="en">Meals</span></h2></div>
     <div class="cost" style="margin-top:16px">
       <div class="row"><div><div class="label"><span class="ko">8/21 (금) 점심</span><span class="en">Fri 8/21 · Lunch</span></div><div class="desc"><span class="ko">각 가족·함께 이동하는 사람끼리</span><span class="en">By family or travel group</span></div></div><div class="amt"><span class="ko">미정</span><span class="en">TBD</span></div></div>
       <div class="row"><div><div class="label"><span class="ko">8/21 (금) 저녁</span><span class="en">Fri 8/21 · Dinner</span></div><div class="desc"><span class="ko">다 같이 모여서 🔥</span><span class="en">All together 🔥</span></div></div><div class="amt" style="color:var(--coral-deep)"><span class="ko">바비큐</span><span class="en">BBQ</span></div></div>
@@ -448,8 +558,8 @@
   </section>
 
   <section>
-    <div class="sec-head"><span class="no">04</span><h2><span class="ko">출발 & 차량</span><span class="en">Departure & Cars</span></h2></div>
-    <p class="sec-note"><span class="ko">대부분 차량은 오전 9시 30분 전후 출발 예정. 차량 배정은 아직 조정 중이에요.</span><span class="en">Most cars leave around 9:30 AM. Assignments are still being arranged.</span></p>
+    <div class="sec-head"><span class="no">05</span><h2><span class="ko">출발 & 차량</span><span class="en">Departure & Cars</span></h2></div>
+    <p class="sec-note"><span class="ko">차량 1·2는 오전 9시 출발. 차량 3(벤자민·문은정·김지윤)은 오후 4시 별도 출발이에요.</span><span class="en">Cars 1 & 2 leave at 9 AM. Car 3 (Benjamin, Kelly, Ji-yoon) leaves separately at 4 PM.</span></p>
     <div class="grid" style="margin-top:16px">
       <div class="card"><span class="tag"><span class="ko">차량 1</span><span class="en">Car 1</span> <span class="badge ok"><span class="ko">확정</span><span class="en">Set</span></span></span><ul><li><span class="ko">푼</span><span class="en">Christian</span></li><li><span class="ko">양윤정</span><span class="en">Yoon-jung</span></li><li><span class="ko">릴리</span><span class="en">Lily</span></li><li><span class="ko">로건</span><span class="en">Logan</span></li></ul></div>
       <div class="card"><span class="tag"><span class="ko">차량 2</span><span class="en">Car 2</span> <span class="badge ok"><span class="ko">확정</span><span class="en">Set</span></span></span><ul><li><span class="ko">남연지</span><span class="en">Youn-ji</span></li><li><span class="ko">소피아</span><span class="en">Sophia</span></li><li><span class="ko">릴리</span><span class="en">Lily</span></li><li><span class="ko">헨리</span><span class="en">Henry</span></li><li><span class="ko">네이트</span><span class="en">Nate</span></li></ul></div>
@@ -463,7 +573,7 @@
   </section>
 
   <section>
-    <div class="sec-head"><span class="no">05</span><h2><span class="ko">각자 준비물</span><span class="en">What to pack</span></h2></div>
+    <div class="sec-head"><span class="no">06</span><h2><span class="ko">각자 준비물</span><span class="en">What to pack</span></h2></div>
     <div class="packlist">
       <span class="pack">🩳 <span class="ko">수영복</span><span class="en">Swimsuit</span></span>
       <span class="pack">🧴 <span class="ko">썬크림</span><span class="en">Sunscreen</span></span>
@@ -484,7 +594,7 @@
   </section>
 
   <section>
-    <div class="sec-head"><span class="no">06</span><h2><span class="ko">비용 정리</span><span class="en">Costs</span></h2></div>
+    <div class="sec-head"><span class="no">07</span><h2><span class="ko">비용 정리</span><span class="en">Costs</span></h2></div>
 
     <h3 style="font-size:16px;margin:6px 0 12px;color:var(--ink-soft)"><span class="ko">숙박 · 음식</span><span class="en">Stay & Food</span></h3>
     <div class="cost">
