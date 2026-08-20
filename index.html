@@ -319,6 +319,35 @@
     font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
   }
 
+  /* Weather forecast */
+  .weather {
+    margin-top: 24px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); padding: 18px 18px 12px;
+  }
+  .w-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .w-head h2 { font-size: 19px; margin: 0; font-weight: 800; }
+  .w-sub { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  .w-day { margin-top: 14px; }
+  .w-day + .w-day { margin-top: 16px; }
+  .w-day-label { font-size: 13px; font-weight: 800; color: var(--coral-deep); margin: 0 0 8px; }
+  .w-summary { font-size: 13.5px; font-weight: 600; color: var(--ink); background: var(--surface-2); border-radius: 10px; padding: 9px 12px; margin: 0 0 9px; line-height: 1.5; }
+  .w-summary.rain { border-left: 3px solid #3b82f6; }
+  .w-summary.dry { border-left: 3px solid var(--sea); }
+  .w-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+  .w-cell {
+    flex: 0 0 auto; width: 56px; text-align: center;
+    background: var(--surface-2); border-radius: 12px; padding: 8px 4px 7px;
+  }
+  .w-cell .wh { font-size: 11px; font-weight: 700; color: var(--ink-soft); }
+  .w-cell .wi { font-size: 21px; line-height: 1.5; }
+  .w-cell .wt { font-size: 13px; font-weight: 800; }
+  .w-cell .wp { font-size: 11px; font-weight: 700; color: var(--sea); }
+  .w-cell.wet { outline: 1.5px solid rgba(59,130,246,.35); }
+  .w-cell.wet .wp { color: #3b82f6; }
+  .w-loading, .w-fail { color: var(--ink-soft); font-size: 14px; padding: 10px 2px; }
+  .w-fail a { color: var(--sea); font-weight: 800; text-decoration: none; }
+  .w-note { font-size: 12px; color: var(--ink-soft); margin: 10px 2px 2px; }
+
   .callout {
     background: var(--surface-2); border-left: 4px solid var(--gold);
     border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 16px;
@@ -428,6 +457,17 @@
         <span class="txt"><b><span class="ko">모든 일정에 다 참여 안 해도 돼요</span><span class="en">You don't have to join everything</span></b><span><span class="ko">원하는 사람끼리 따로 체험을 가도 되고, 숙소에서 쉬어도 됩니다.</span><span class="en">Head out with whoever you like, or just relax at the caravan.</span></span></span>
       </li>
     </ul>
+  </section>
+
+  <section class="weather">
+    <div class="w-head">
+      <h2><span class="ko">🌤️ 태안 날씨</span><span class="en">🌤️ Taean Weather</span></h2>
+      <span class="w-sub"><span class="ko">8/21–22 시간별 · 참고용</span><span class="en">Hourly, Aug 21–22 · reference</span></span>
+    </div>
+    <div id="w-body">
+      <p class="w-loading"><span class="ko">예보 불러오는 중…</span><span class="en">Loading forecast…</span></p>
+    </div>
+    <p class="w-note"><span class="ko">글로벌 모델(Open-Meteo) 기반 <b>참고용</b> 예보예요. 정확한 값은 <a href="https://m.search.naver.com/search.naver?query=태안+날씨" target="_blank" rel="noopener" style="color:var(--sea);font-weight:800;text-decoration:none">네이버 날씨 →</a> 에서 확인하세요.</span><span class="en"><b>Reference</b> forecast from global models (Open-Meteo). For the trusted local forecast, check <a href="https://m.search.naver.com/search.naver?query=태안+날씨" target="_blank" rel="noopener" style="color:var(--sea);font-weight:800;text-decoration:none">Naver Weather →</a></span></p>
   </section>
 
   <section>
@@ -666,6 +706,121 @@
     });
     lb.addEventListener('click', function (e) { if (e.target !== lbImg) closeLb(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
+  })();
+</script>
+
+<script>
+  (function () {
+    var box = document.getElementById('w-body');
+    if (!box) return;
+    var LAT = 36.68, LON = 126.31;
+    var DAYS = [
+      { d: '2026-08-21', ko: '8/21 (금)', en: 'Fri · Aug 21' },
+      { d: '2026-08-22', ko: '8/22 (토)', en: 'Sat · Aug 22' }
+    ];
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON +
+      '&hourly=temperature_2m,precipitation_probability,weather_code&start_date=2026-08-21&end_date=2026-08-22&timezone=Asia%2FSeoul';
+
+    function emoji(c) {
+      if (c === 0) return '☀️';
+      if (c === 1 || c === 2) return '🌤️';
+      if (c === 3) return '☁️';
+      if (c === 45 || c === 48) return '🌫️';
+      if (c >= 51 && c <= 57) return '🌦️';
+      if (c >= 61 && c <= 67) return '🌧️';
+      if (c >= 71 && c <= 77) return '❄️';
+      if (c >= 80 && c <= 82) return '🌦️';
+      if (c === 85 || c === 86) return '🌨️';
+      if (c >= 95) return '⛈️';
+      return '🌡️';
+    }
+    function bi(ko, en) {
+      return '<span class="ko">' + ko + '</span><span class="en">' + en + '</span>';
+    }
+    function isRainy(wc, pop) {
+      // drizzle/rain/showers/thunder (skip snow codes), or high probability
+      var rainCode = (wc >= 51 && wc <= 67) || (wc >= 80 && wc <= 82) || wc >= 95;
+      return rainCode || (pop != null && pop >= 60);
+    }
+    function rainType(maxCode) {
+      if (maxCode >= 95) return ['뇌우', 'thunderstorms'];
+      if (maxCode >= 80) return ['소나기', 'showers'];
+      if (maxCode >= 63) return ['비', 'rain'];
+      if (maxCode >= 61) return ['비', 'rain'];
+      if (maxCode >= 51) return ['가랑비', 'light rain'];
+      return ['비', 'rain'];
+    }
+    function hKo(h) { return h === 0 ? '오전 12시' : h < 12 ? '오전 ' + h + '시' : h === 12 ? '낮 12시' : '오후 ' + (h - 12) + '시'; }
+    function hEn(h) { var ap = h < 12 ? 'am' : 'pm'; var hh = h % 12; if (hh === 0) hh = 12; return hh + ' ' + ap; }
+    function summary(day, h, idx) {
+      var hours = [], codes = [], pops = [];
+      for (var hr = 0; hr <= 23; hr++) {
+        var i = idx[day.d + 'T' + (hr < 10 ? '0' + hr : hr) + ':00'];
+        if (i === undefined) continue;
+        hours.push(hr); codes.push(h.weather_code[i]); pops.push(h.precipitation_probability[i]);
+      }
+      var wetHrs = [], wetCodes = [], maxPop = 0;
+      hours.forEach(function (hr, k) {
+        if (pops[k] != null && pops[k] > maxPop) maxPop = pops[k];
+        if (isRainy(codes[k], pops[k])) { wetHrs.push(hr); wetCodes.push(codes[k]); }
+      });
+      if (!wetHrs.length) {
+        return { cls: 'dry', html: bi('종일 비 소식은 크지 않아요 (강수확률 최대 ' + maxPop + '%). 야외 일정 진행하기 좋아요.',
+          'Little rain expected all day (peak ' + maxPop + '%). Good for outdoor plans.') };
+      }
+      var s = wetHrs[0], e = wetHrs[wetHrs.length - 1];
+      var tp = rainType(Math.max.apply(null, wetCodes));
+      var wetMaxPop = 0;
+      hours.forEach(function (hr, k) { if (hr >= s && hr <= e && pops[k] > wetMaxPop) wetMaxPop = pops[k]; });
+      var tailKo = e < 20 ? ' 저녁부터는 점차 그쳐요.' : '';
+      var tailEn = e < 20 ? ' Clearing up through the evening.' : '';
+      return { cls: 'rain', html: bi(
+        hKo(s) + '부터 ' + hKo(e) + '까지 ' + tp[0] + '가 예상돼요 (강수확률 최대 ' + wetMaxPop + '%).' + tailKo,
+        tp[1].charAt(0).toUpperCase() + tp[1].slice(1) + ' expected from ' + hEn(s) + ' to ' + hEn(e) + ' (peak ' + wetMaxPop + '%).' + tailEn
+      ) };
+    }
+    function fail() {
+      box.innerHTML = '<p class="w-fail">' +
+        bi('예보를 불러오지 못했어요. ', "Couldn't load the forecast. ") +
+        '<a href="https://m.search.naver.com/search.naver?query=태안+날씨" target="_blank" rel="noopener">' +
+        bi('네이버 날씨 보기 →', 'Check Naver Weather →') + '</a></p>';
+    }
+    function render(h) {
+      var idx = {};
+      h.time.forEach(function (t, i) { idx[t] = i; });
+      var html = '';
+      DAYS.forEach(function (day) {
+        var cells = '';
+        for (var hr = 8; hr <= 21; hr++) {
+          var key = day.d + 'T' + (hr < 10 ? '0' + hr : hr) + ':00';
+          var i = idx[key];
+          if (i === undefined) continue;
+          var temp = Math.round(h.temperature_2m[i]);
+          var pop = h.precipitation_probability[i];
+          var wc = h.weather_code[i];
+          var wet = pop >= 60 ? ' wet' : '';
+          cells += '<div class="w-cell' + wet + '">' +
+            '<div class="wh">' + (hr < 10 ? '0' + hr : hr) + '</div>' +
+            '<div class="wi">' + emoji(wc) + '</div>' +
+            '<div class="wt">' + temp + '°</div>' +
+            '<div class="wp">☔' + (pop == null ? '-' : pop) + '%</div>' +
+            '</div>';
+        }
+        var sm = summary(day, h, idx);
+        html += '<div class="w-day"><p class="w-day-label">' + bi(day.ko, day.en) +
+          '</p><p class="w-summary ' + sm.cls + '">' + sm.html + '</p>' +
+          '<div class="w-strip">' + cells + '</div></div>';
+      });
+      box.innerHTML = html;
+    }
+
+    var done = false;
+    var timer = setTimeout(function () { if (!done) { done = true; fail(); } }, 8000);
+    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      if (done) return; done = true; clearTimeout(timer);
+      if (d && d.hourly && d.hourly.time && d.hourly.time.length) render(d.hourly);
+      else fail();
+    }).catch(function () { if (done) return; done = true; clearTimeout(timer); fail(); });
   })();
 </script>
 
