@@ -354,6 +354,22 @@
   .w-link:focus-visible { outline: 2px solid var(--sea); outline-offset: 2px; }
   .w-note { font-size: 12px; color: var(--ink-soft); margin: 12px 2px 2px; line-height: 1.5; }
 
+  /* Tide */
+  .tide-day { margin-top: 12px; }
+  .tide-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 7px; }
+  .tide-pill {
+    display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+    font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 999px;
+    background: var(--surface-2); font-variant-numeric: tabular-nums;
+  }
+  .tide-pill.low { color: var(--sea); }
+  .tide-pill.high { color: var(--coral-deep); }
+  .tide-pill.hl { outline: 2px solid var(--gold); outline-offset: -1px; }
+  .tide-tip {
+    font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.5;
+    background: rgba(242,165,65,.13); border-radius: 10px; padding: 10px 12px; margin: 13px 0 0;
+  }
+
   .callout {
     background: var(--surface-2); border-left: 4px solid var(--gold);
     border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 16px;
@@ -480,6 +496,32 @@
     </div>
     <a class="w-link" href="https://m.search.naver.com/search.naver?query=태안+날씨" target="_blank" rel="noopener">🔎 <span class="ko">네이버 날씨(태안) 보기 →</span><span class="en">Open Naver Weather (Taean) →</span></a>
     <p class="w-note"><span class="ko">※ 위 요약은 8/19 기준 글로벌 모델(Open-Meteo) 참고예요. 특히 <b>강수는 기상청과 차이가 클 수 있어요</b>(기상청은 더 적게 볼 수 있음). 최종 확인은 위 네이버 날씨에서 하세요.</span><span class="en">※ Written Aug 19 from a global model (Open-Meteo). <b>Rain can differ a lot from the Korean Met (KMA)</b>, which may show less. Confirm on Naver Weather above.</span></p>
+  </section>
+
+  <section class="weather">
+    <div class="w-head">
+      <h2><span class="ko">🌊 물때 (간조·만조)</span><span class="en">🌊 Tides (low / high)</span></h2>
+      <span class="w-sub"><span class="ko">청포대 앞바다 · 참고</span><span class="en">Off Cheongpodae · reference</span></span>
+    </div>
+    <div class="tide-day">
+      <p class="w-day-label"><span class="ko">8/21 (금)</span><span class="en">Fri, Aug 21</span></p>
+      <div class="tide-row">
+        <span class="tide-pill low">🔽 <span class="ko">간조</span><span class="en">Low</span> 02:40</span>
+        <span class="tide-pill high">🔼 <span class="ko">만조</span><span class="en">High</span> 08:14</span>
+        <span class="tide-pill low hl">🔽 <span class="ko">간조</span><span class="en">Low</span> 14:50</span>
+        <span class="tide-pill high">🔼 <span class="ko">만조</span><span class="en">High</span> 21:45</span>
+      </div>
+    </div>
+    <div class="tide-day">
+      <p class="w-day-label"><span class="ko">8/22 (토)</span><span class="en">Sat, Aug 22</span></p>
+      <div class="tide-row">
+        <span class="tide-pill low">🔽 <span class="ko">간조</span><span class="en">Low</span> 03:55</span>
+        <span class="tide-pill high">🔼 <span class="ko">만조</span><span class="en">High</span> 09:19</span>
+        <span class="tide-pill low hl">🔽 <span class="ko">간조</span><span class="en">Low</span> 16:03</span>
+      </div>
+    </div>
+    <p class="tide-tip"><span class="ko">🐚 조개·갯벌체험은 <b>간조 앞뒤 1~2시간</b>이 좋아요. 금요일 <b>오후 3시쯤(간조 14:50)</b>이 딱 좋은 타이밍! (표시된 간조가 물이 가장 많이 빠지는 때예요)</span><span class="en">🐚 Best for clam digging is <b>1–2 hrs around low tide</b>. Friday <b>around 3 PM (low 14:50)</b> is the sweet spot — the highlighted lows are when the flat is most exposed.</span></p>
+    <p class="w-note"><span class="ko">※ 조위 모델(Open-Meteo) 기준 대략값이에요. 정확한 물때는 <a href="https://m.search.naver.com/search.naver?query=청포대+물때" target="_blank" rel="noopener" style="color:var(--sea);font-weight:800;text-decoration:none">물때표(네이버) →</a> 에서 확인하세요.</span><span class="en">※ Approximate, from a tide model (Open-Meteo). Check the exact table at <a href="https://m.search.naver.com/search.naver?query=청포대+물때" target="_blank" rel="noopener" style="color:var(--sea);font-weight:800;text-decoration:none">Naver tide table →</a></span></p>
   </section>
 
   <section>
